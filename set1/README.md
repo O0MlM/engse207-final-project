@@ -65,9 +65,7 @@ Nginx (API Gateway)
 ▼
 
 PostgreSQL Database
-```
 
-```
         │
         │ HTTPS :443
         ▼
