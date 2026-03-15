@@ -657,6 +657,26 @@ function showPage(page) {
     renderJwtInspector, escHtml)
 */
 
+/* API helper */
+function authHeaders() {
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  };
+}
+
+async function apiFetch(url, options = {}) {
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      ...(options.headers || {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    }
+  });
+
+  return res;
+}
+
 /* ─────────────────────────────────────
    TASKS — LOAD & RENDER
 ───────────────────────────────────── */
@@ -891,6 +911,73 @@ if (token) {
     else { localStorage.removeItem('jwt_token'); token = null; }
   })();
 }
+
+/* ─────────────────────────────────────
+   API HELPER
+───────────────────────────────────── */
+// function authHeaders() {
+//   return {
+//     'Content-Type': 'application/json',
+//     ...(token ? { Authorization: `Bearer ${token}` } : {})
+//   };
+// }
+
+// async function apiFetch(url, options = {}) {
+//   const res = await fetch(url, {
+//     ...options,
+//     headers: {
+//       ...(options.headers || {}),
+//       ...(token ? { Authorization: `Bearer ${token}` } : {})
+//     }
+//   });
+
+//   return res;
+// }
+
+/* ─────────────────────────────────────
+   TOAST
+───────────────────────────────────── */
+function toast(msg, type='info', timeout=2500) {
+  let container = document.querySelector('.toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+
+  container.appendChild(el);
+
+  setTimeout(() => {
+    el.remove();
+  }, timeout);
+}
+
+/* ─────────────────────────────────────
+   MODAL
+───────────────────────────────────── */
+function closeModal() {
+  document.getElementById('task-modal').classList.add('hidden');
+}
+
 </script>
+<div id="confirm-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>ยืนยันการลบ</h3>
+      <button class="btn-close" onclick="closeConfirm()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>คุณแน่ใจหรือไม่ว่าต้องการลบ Task นี้?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeConfirm()">ยกเลิก</button>
+      <button class="btn-danger" id="confirm-delete-btn">ลบ</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
