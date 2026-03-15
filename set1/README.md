@@ -6,14 +6,13 @@
 
 # 1. Course Information
 
-<<<<<<< HEAD
 **รายวิชา:** ENGSE207 Software Architecture
 **งาน:** Final Lab Set 1
 
 **ผู้จัดทำ:** 67543210005-4 Sarisah Thawanwarasak
 
-**Repository:** `final-lab/set1`
-=======
+**Repository:** 
+---
 **Course:** ENGSE207 Software Architecture
 **Assignment:** Final Lab — Set 1
 **Topic:** Microservices Architecture with HTTPS, JWT Authentication, and Logging
@@ -24,7 +23,6 @@ Sarisah Thawanwarasak
 
 **Repository:**
 `final-lab/set1`
->>>>>>> 71cba75 (Update Set1)
 
 ---
 
@@ -69,7 +67,7 @@ Nginx (API Gateway)
 PostgreSQL Database
 ```
 
-=======
+```
         │
         │ HTTPS :443
         ▼
@@ -84,7 +82,6 @@ PostgreSQL Database
           PostgreSQL
 ```
 
->>>>>>> 71cba75 (Update Set1)
 Services ในระบบ
 
 | Service      | Description                     |
@@ -337,7 +334,6 @@ POST /api/logs/internal
 GET /api/logs
 GET /api/logs/stats
 ```
-<<<<<<< HEAD
 ---
 
 # 10. การทดสอบระบบ
@@ -352,8 +348,6 @@ GET /api/logs/stats
 6 ลบ task   
 7 ทดสอบ request ที่ไม่มี JWT → ต้องได้ 401   
 8 ตรวจสอบ logs    
-=======
->>>>>>> 71cba75 (Update Set1)
 
 ---
 
@@ -428,12 +422,10 @@ GET /api/logs/stats
 แนวทางพัฒนาต่อ
 
 * เพิ่ม register API
-<<<<<<< HEAD
-* แยก database per service
-* deploy บน cloud
-=======
-* แยก database ต่อ service
-* เพิ่ม refresh token
-* เพิ่ม monitoring dashboard
-* deploy บน cloud environment
->>>>>>> 71cba75 (Update Set1)
+
+* แยก database per service   
+* deploy บน cloud   
+* แยก database ต่อ service   
+* เพิ่ม refresh token   
+* เพิ่ม monitoring dashboard   
+* deploy บน cloud environment   
