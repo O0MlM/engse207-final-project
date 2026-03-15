@@ -1,38 +1,60 @@
 # ENGSE207 Software Architecture
 
-## Final Lab — Set 1: Microservices + HTTPS + Lightweight Logging
+## Final Lab — Set 1: Secure Microservices Task Board
 
 ---
 
-# 1. รายวิชาและผู้จัดทำ
+# 1. Course Information
 
+<<<<<<< HEAD
 **รายวิชา:** ENGSE207 Software Architecture
 **งาน:** Final Lab Set 1
 
 **ผู้จัดทำ:** 67543210005-4 Sarisah Thawanwarasak
 
 **Repository:** `final-lab/set1`
+=======
+**Course:** ENGSE207 Software Architecture
+**Assignment:** Final Lab — Set 1
+**Topic:** Microservices Architecture with HTTPS, JWT Authentication, and Logging
+
+**Student:**
+67543210005-4
+Sarisah Thawanwarasak
+
+**Repository:**
+`final-lab/set1`
+>>>>>>> 71cba75 (Update Set1)
 
 ---
 
-# 2. ภาพรวมของระบบ
+# 2. System Overview
 
-โปรเจกต์นี้เป็นระบบ **Task Board แบบ Microservices** ที่ออกแบบเพื่อฝึกการพัฒนาสถาปัตยกรรมซอฟต์แวร์ โดยมีองค์ประกอบหลักดังนี้
+โปรเจกต์นี้เป็นระบบ **Task Board แบบ Microservices** ที่ออกแบบเพื่อฝึกการพัฒนาสถาปัตยกรรมซอฟต์แวร์ที่ปลอดภัยและสามารถแยกส่วนการทำงานได้อย่างชัดเจน
 
-* แยกระบบออกเป็นหลาย services
-* ใช้ **Nginx เป็น API Gateway**
-* เปิดใช้งาน **HTTPS ด้วย Self-Signed Certificate**
-* ใช้ **JWT สำหรับ Authentication**
-* ใช้ **Lightweight Logging Service**
-* ใช้ **Docker Compose** สำหรับรันทุก service พร้อมกัน
+ระบบประกอบด้วยหลาย services ที่ทำงานร่วมกันผ่าน **API Gateway (Nginx)** และใช้ **HTTPS** เพื่อเข้ารหัสการสื่อสารทั้งหมด
 
-ระบบนี้ **ไม่มีระบบสมัครสมาชิก (Register)** และใช้เฉพาะ **Seed Users**
+ฟีเจอร์หลักของระบบ
+
+* Login ด้วย **JWT Authentication**
+* สร้าง / แก้ไข / ลบ Tasks
+* Reverse Proxy ด้วย **Nginx**
+* ใช้ **HTTPS (Self-Signed Certificate)**
+* มี **Logging Service** สำหรับบันทึกเหตุการณ์
+* รันทุก service ผ่าน **Docker Compose**
+
+หมายเหตุ
+ระบบนี้ **ไม่มี Register API** และใช้ **Seed Users** สำหรับทดสอบเท่านั้น
 
 ---
 
-# 3. Architecture Overview
+# 3. System Architecture
+
+ระบบถูกออกแบบตามแนวคิด **Microservices Architecture**
+
 ```
 Browser / Postman
+<<<<<<< HEAD
 │
 │ HTTPS :443
 ▼
@@ -47,18 +69,37 @@ Nginx (API Gateway)
 PostgreSQL Database
 ```
 
+=======
+        │
+        │ HTTPS :443
+        ▼
+   Nginx (API Gateway)
+        │
+        ├── /api/auth/*  → auth-service
+        ├── /api/tasks/* → task-service
+        ├── /api/logs/*  → log-service
+        └── /            → frontend
+                │
+                ▼
+          PostgreSQL
+```
+
+>>>>>>> 71cba75 (Update Set1)
 Services ในระบบ
 
-* nginx – API Gateway และ HTTPS
-* frontend – หน้าเว็บ Task Board
-* auth-service – Login และ JWT verification
-* task-service – CRUD Tasks
-* log-service – จัดเก็บและแสดง logs
-* postgres – ฐานข้อมูล
+| Service      | Description                     |
+| ------------ | ------------------------------- |
+| nginx        | Reverse proxy และ HTTPS gateway |
+| frontend     | หน้าเว็บ Task Board             |
+| auth-service | Authentication และ JWT          |
+| task-service | CRUD operations สำหรับ tasks    |
+| log-service  | บันทึกและแสดง logs              |
+| postgres     | ฐานข้อมูลของระบบ                |
 
 ---
 
-# 4. โครงสร้างโปรเจกต์
+# 4. Repository Structure
+
 ```
 final-lab/set1/
 ├── README.md
@@ -82,27 +123,16 @@ final-lab/set1/
 │   ├── Dockerfile
 │   ├── package.json
 │   └── src/
-│       ├── index.js
-│       ├── routes/auth.js
-│       ├── middleware/jwtUtils.js
-│       └── db/db.js
 │
 ├── task-service/
 │   ├── Dockerfile
 │   ├── package.json
 │   └── src/
-│       ├── index.js
-│       ├── routes/tasks.js
-│       ├── middleware/
-│       │   ├── authMiddleware.js
-│       │   └── jwtUtils.js
-│       └── db/db.js
 │
 ├── log-service/
 │   ├── Dockerfile
 │   ├── package.json
 │   └── src/
-│       └── index.js
 │
 ├── db/
 │   └── init.sql
@@ -111,23 +141,11 @@ final-lab/set1/
 │   └── gen-certs.sh
 │
 └── screenshots/
-    ├── 01_docker_running.png
-    ├── 02_https_browser.png
-    ├── 03_login_success.png
-    ├── 04_login_fail.png
-    ├── 05_create_task.png
-    ├── 06_get_tasks.png
-    ├── 07_update_task.png
-    ├── 08_delete_task.png
-    ├── 09_no_jwt_401.png
-    ├── 10_logs_api.png
-    ├── 11_rate_limit.png
-    └── 12_frontend_screenshot.png
 ```
 
 ---
 
-# 5. เทคโนโลยีที่ใช้
+# 5. Technologies Used
 
 * Node.js
 * Express.js
@@ -135,24 +153,41 @@ final-lab/set1/
 * Docker
 * Docker Compose
 * Nginx
-* JWT
+* JWT (jsonwebtoken)
 * bcryptjs
 * HTML / JavaScript
 
 ---
 
-# 6. วิธีรันระบบ
+# 6. HTTPS Configuration
 
-## สร้าง certificate
+ระบบใช้ **Self-Signed Certificate** สำหรับการเข้ารหัสการสื่อสาร
+
+สร้าง certificate ด้วย script
+
 ```
 chmod +x scripts/gen-certs.sh
 ./scripts/gen-certs.sh
 ```
+
+เมื่อเปิดผ่าน browser จะพบข้อความ
+
+```
+Your connection is not private
+net::ERR_CERT_AUTHORITY_INVALID
+```
+
+เนื่องจาก certificate ไม่ได้ออกโดย Trusted CA
+ซึ่งเป็น behavior ปกติสำหรับ development environment
+
 ---
 
-## สร้าง .env
+# 7. Running the System
+
+## 1. Create .env file
 
 ตัวอย่าง
+
 ```
 POSTGRES_DB=taskboard
 POSTGRES_USER=admin
@@ -164,68 +199,145 @@ JWT_EXPIRES=1h
 
 ---
 
-## สร้าง bcrypt hash
+## 2. Generate bcrypt password hashes
+
+ตัวอย่าง
+
 ```
 node -e "const b=require('bcryptjs'); console.log(b.hashSync('alice123',10))"
 ```
-นำ hash ไปใส่ใน
+
+นำ hash ที่ได้ไปแทนค่าใน
+
 ```
 db/init.sql
 ```
+
 ---
 
-## รันระบบ
+## 3. Run the system
+
 ```
 docker compose down -v
 docker compose up --build
 ```
----
 
-# 7. การเข้าใช้งาน
+เมื่อ container ทำงานแล้ว สามารถเข้าใช้งานได้ที่
 
-Frontend
-
+```
 https://localhost
-
-Log Dashboard
-
-https://localhost/logs.html
-
-เนื่องจากใช้ self-signed certificate browser อาจแสดง warning ให้กดยอมรับก่อนเข้าใช้งาน
+```
 
 ---
 
 # 8. Seed Users
 
+<<<<<<< HEAD
 | Username | Email | Password | Role |   
 |----------|-------|----------|------|    
 | alice | [alice@lab.local](mailto:alice@lab.local) | alice123 | member |   
 | bob | [bob@lab.local](mailto:bob@lab.local) | bob456 | member |   
 | admin | [admin@lab.local](mailto:admin@lab.local) | adminpass | admin |   
+=======
+| Username | Email                                     | Password  | Role   |
+| -------- | ----------------------------------------- | --------- | ------ |
+| alice    | [alice@lab.local](mailto:alice@lab.local) | alice123  | member |
+| bob      | [bob@lab.local](mailto:bob@lab.local)     | bob456    | member |
+| admin    | [admin@lab.local](mailto:admin@lab.local) | adminpass | admin  |
+
+Password จะถูก hash ด้วย **bcrypt** ก่อนเก็บในฐานข้อมูล
+>>>>>>> 71cba75 (Update Set1)
 
 ---
 
-# 9. API Summary
+# 9. Security Design
+
+## HTTPS
+
+Nginx ทำหน้าที่เป็น HTTPS gateway
+
+Browser → HTTPS → Nginx → Services
+
+ทุก request จาก client จะถูกเข้ารหัสก่อนเข้าสู่ระบบ
+
+---
+
+## JWT Authentication
+
+หลัง login สำเร็จ
+
+Auth Service จะสร้าง JWT token
+
+```
+Authorization: Bearer <token>
+```
+
+Task Service และ Log Service จะตรวจสอบ token ก่อนอนุญาตให้ใช้งาน
+
+---
+
+## Role-based Access Control
+
+| Role   | Permissions     |
+| ------ | --------------- |
+| member | ใช้งาน Task API |
+| admin  | ดู logs ของระบบ |
+
+---
+
+# 10. Logging System
+
+ทุก service สามารถส่ง log ไปยัง **log-service**
+
+ตัวอย่างเหตุการณ์ที่ถูกบันทึก
+
+* login success / failure
+* create task
+* update task
+* delete task
+* unauthorized request
+
+Admin สามารถดู logs ผ่าน
+
+```
+/api/logs
+```
+
+หรือผ่านหน้า
+
+```
+https://localhost/logs.html
+```
+
+---
+
+# 11. API Summary
 
 Auth Service
+
 ```
 POST /api/auth/login
 GET /api/auth/verify
 GET /api/auth/me
 ```
+
 Task Service
+
 ```
 GET /api/tasks
 POST /api/tasks
 PUT /api/tasks/:id
 DELETE /api/tasks/:id
 ```
+
 Log Service
+
 ```
 POST /api/logs/internal
 GET /api/logs
 GET /api/logs/stats
 ```
+<<<<<<< HEAD
 ---
 
 # 10. การทดสอบระบบ
@@ -240,44 +352,88 @@ GET /api/logs/stats
 6 ลบ task   
 7 ทดสอบ request ที่ไม่มี JWT → ต้องได้ 401   
 8 ตรวจสอบ logs    
+=======
+>>>>>>> 71cba75 (Update Set1)
 
 ---
 
-# 11. Screenshots
+# 12. Test Cases
 
-screenshots ที่แนบ
+ระบบถูกทดสอบตามข้อกำหนดใน assignment
 
-* docker running
-* https browser
-* login success
-* create task
-* update task
-* delete task
-* logs dashboard
+| Test | Description                           |
+| ---- | ------------------------------------- |
+| T1   | Docker compose run successfully       |
+| T2   | HTTPS access with certificate warning |
+| T3   | Login success                         |
+| T4   | Login fail                            |
+| T5   | Create task                           |
+| T6   | Get tasks                             |
+| T7   | Update task                           |
+| T8   | Delete task                           |
+| T9   | Request without JWT → 401             |
+| T10  | Admin access logs                     |
+| T11  | Rate limiting on login                |
+
+หลักฐาน screenshots อยู่ในโฟลเดอร์
+
+```
+/screenshots
+```
 
 ---
 
-# 12. ปัญหาที่พบ
+# 13. Screenshots
 
-* bcrypt hash ไม่ตรงทำให้ login ไม่ได้
-* nginx route ไม่ตรง path ของ service
+ตัวอย่าง screenshots ที่แนบ
+
+* Docker containers running
+* HTTPS browser warning
+* Login success
+* Login failure
+* Create task
+* Get tasks
+* Update task
+* Delete task
+* Unauthorized request
+* Log dashboard
+* Rate limit response
+
+---
+
+# 14. Problems Encountered
+
+ปัญหาที่พบระหว่างพัฒนา
+
+* bcrypt hash ไม่ตรง ทำให้ login ไม่สำเร็จ
+* nginx route path ไม่ตรงกับ service endpoint
 * docker volume ทำให้ seed users ไม่อัปเดต
+* HTTPS certificate warning ใน browser
 
 ---
 
-# 13. ข้อจำกัดของระบบ
+# 15. Known Limitations
+
+ข้อจำกัดของระบบ
 
 * ใช้ self-signed certificate
-* ใช้ shared database
+* database ยังเป็น shared database
 * ไม่มีระบบ register
 * logging เป็น lightweight
 
 ---
 
-# 14. การต่อยอด
+# 16. Future Improvements
 
-สามารถพัฒนาต่อในอนาคต เช่น
+แนวทางพัฒนาต่อ
 
 * เพิ่ม register API
+<<<<<<< HEAD
 * แยก database per service
 * deploy บน cloud
+=======
+* แยก database ต่อ service
+* เพิ่ม refresh token
+* เพิ่ม monitoring dashboard
+* deploy บน cloud environment
+>>>>>>> 71cba75 (Update Set1)

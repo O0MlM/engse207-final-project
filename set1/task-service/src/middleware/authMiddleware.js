@@ -1,27 +1,29 @@
-const { verifyToken } = require('./jwtUtils');
+const jwt = require('jsonwebtoken');
 
-module.exports = function requireAuth(req, res, next) {
-  const header = req.headers['authorization'] || '';
-  const token  = header.startsWith('Bearer ') ? header.slice(7) : null;
+function requireAuth(req, res, next) {
 
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized: No token provided' });
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Unauthorized: No token' });
   }
+
+  const token = authHeader.split(' ')[1];
+
   try {
-    req.user = verifyToken(token);  // { sub, email, role, username }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = decoded;
+
     next();
+
   } catch (err) {
-    // ส่ง log JWT error ไปยัง Log Service (fire-and-forget)
-    fetch('http://log-service:3003/api/logs/internal', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service: 'task-service', level: 'ERROR', event: 'JWT_INVALID',
-        ip_address: req.headers['x-real-ip'] || req.ip,
-        message: 'Invalid JWT token: ' + err.message,
-        meta: { error: err.message }
-      })
-    }).catch(() => {});
-    return res.status(401).json({ error: 'Unauthorized: ' + err.message });
+
+    return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+
   }
-};
+
+}
+
+module.exports = requireAuth;
