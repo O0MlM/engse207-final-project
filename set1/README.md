@@ -9,12 +9,9 @@
 **รายวิชา:** ENGSE207 Software Architecture
 **งาน:** Final Lab Set 1
 
-**ผู้จัดทำ**
+**ผู้จัดทำ:** 67543210005-4 Sarisah Thawanwarasak
 
-67543210005-4
-Sarisah Thawanwarasak
-
-Repository: `final-lab/set1`
+**Repository:** `final-lab/set1`
 
 ---
 
@@ -46,9 +43,9 @@ Nginx (API Gateway)
 └─ / → frontend
 
 ▼
-```
 
 PostgreSQL Database
+```
 
 Services ในระบบ
 
@@ -70,16 +67,16 @@ final-lab/set1/
 ├── .gitignore
 │
 ├── nginx/
-│   ├── nginx.conf              ← HTTPS + reverse proxy config
+│   ├── nginx.conf
 │   ├── Dockerfile
-│   └── certs/                  ← Self-signed cert (generate ด้วย script)
+│   └── certs/
 │       ├── cert.pem
 │       └── key.pem
 │
 ├── frontend/
 │   ├── Dockerfile
-│   ├── index.html              ← Task Board UI (Login + CRUD Tasks + JWT inspector)
-│   └── logs.html               ← Log Dashboard (ดึงจาก /api/logs)
+│   ├── index.html
+│   └── logs.html
 │
 ├── auth-service/
 │   ├── Dockerfile
@@ -108,10 +105,10 @@ final-lab/set1/
 │       └── index.js
 │
 ├── db/
-│   └── init.sql                ← Schema + Seed Users ทั้งหมด
+│   └── init.sql
 │
 ├── scripts/
-│   └── gen-certs.sh            ← สร้าง self-signed cert
+│   └── gen-certs.sh
 │
 └── screenshots/
     ├── 01_docker_running.png
@@ -200,10 +197,10 @@ https://localhost/logs.html
 
 # 8. Seed Users
 
-Username | Email | Password | Role
-alice | [alice@lab.local](mailto:alice@lab.local) | alice123 | member
-bob | [bob@lab.local](mailto:bob@lab.local) | bob456 | member
-admin | [admin@lab.local](mailto:admin@lab.local) | adminpass | admin
+| Username | Email | Password | Role |   
+| alice | [alice@lab.local](mailto:alice@lab.local) | alice123 | member |   
+| bob | [bob@lab.local](mailto:bob@lab.local) | bob456 | member |   
+| admin | [admin@lab.local](mailto:admin@lab.local) | adminpass | admin |   
 
 ---
 
@@ -234,14 +231,14 @@ GET /api/logs/stats
 
 ขั้นตอนการทดสอบ
 
-1 รัน docker compose
-2 เปิด https://localhost
-3 login ด้วย seed users
-4 สร้าง task
-5 แก้ไข task
-6 ลบ task
-7 ทดสอบ request ที่ไม่มี JWT → ต้องได้ 401
-8 ตรวจสอบ logs
+1 รัน docker compose   
+2 เปิด https://localhost   
+3 login ด้วย seed users   
+4 สร้าง task   
+5 แก้ไข task   
+6 ลบ task   
+7 ทดสอบ request ที่ไม่มี JWT → ต้องได้ 401   
+8 ตรวจสอบ logs    
 
 ---
 
