@@ -198,6 +198,7 @@ https://localhost/logs.html
 # 8. Seed Users
 
 | Username | Email | Password | Role |   
+|----------|-------|----------|------|    
 | alice | [alice@lab.local](mailto:alice@lab.local) | alice123 | member |   
 | bob | [bob@lab.local](mailto:bob@lab.local) | bob456 | member |   
 | admin | [admin@lab.local](mailto:admin@lab.local) | adminpass | admin |   
